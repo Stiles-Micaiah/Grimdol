@@ -1,0 +1,7 @@
+namespace CastleGrimtol
+{
+    class App
+    {
+        
+    }
+}
