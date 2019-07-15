@@ -1,7 +1,0 @@
-namespace CastleGrimtol
-{
-    class App
-    {
-        
-    }
-}

@@ -1,14 +1,26 @@
 ﻿using System;
 using System.Threading;
 using CastleGrimtol.Project;
-
+using CastleGrimtol.Project.Models;
 namespace CastleGrimtol
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            
+            //TODO  optionally here or else in the gameservice, get the players name and create an instance of a player with that name
+            //TODO  create an instance of a gameservice and then invoke the StartGame method
+            string NameStr = "What is your name?";
+            for (int i = 0; i < NameStr.Length; i++)
+            {
+                Console.Write(NameStr[i]);
+                Thread.Sleep(250);
+            }
+            Console.WriteLine();
+            string nameOfPlayer = Console.ReadLine();
+            Player player = new Player(nameOfPlayer);
+            GameService gameservice = new GameService(player);
+            gameservice.StartGame();
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using CastleGrimtol.Project.Interfaces;
 
 namespace CastleGrimtol.Project.Models
@@ -37,6 +38,17 @@ namespace CastleGrimtol.Project.Models
                 return "Item destroyed";
             }
             return "much error";
+        }
+
+        public void PrintInv()
+        {
+            Console.Clear();
+          for (int i = 0; i < Inventory.Count; i++)
+            {
+                Console.WriteLine(Inventory[i].ToString());
+                Thread.Sleep(3);
+            }
+
         }
 
 
