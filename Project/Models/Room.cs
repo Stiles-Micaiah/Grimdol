@@ -6,45 +6,47 @@ namespace CastleGrimtol.Project.Models
     public class Room : IRoom
     {
 
-        public Room(string name, string description, List<Item> items, Dictionary<string, Room> exits)
+        public Room(string name, string description, List<Item> items = null, Dictionary<string, Room> exits = null)
         {
             this.Name = name;
             this.Description = description;
             this.Items = items;
             this.Exits = exits;
-
         }
         public string Name { get; set; }
         public string Description { get; set; }
         public List<Item> Items { get; set; }
         public Dictionary<string, Room> Exits { get; set; }
-        public Room Forward { get; set; }
-        public Room Aft { get; set; }
-        public Room Port { get; set; }
-        public Room Starboard { get; set; }
-        public Room Ded { get; set; }
+        public Room North { get; set; }
+        public Room South { get; set; }
+        public Room West { get; set; }
+        public Room East { get; set; }
+        public Room Dead { get; set; }
 
 
         public Room RoomChange(string dir)
         {
             switch (dir)
             {
-                case "forward":
-                    if (Forward != null) return Forward;
+                case "north":
+                    if (North != null) return North;
                     return this;
-                case "aft":
-                    if (Aft != null) return Aft;
+                case "south":
+                    if (South != null) return South;
                     return this;
-                case "port":
-                    if (Port != null) return Port;
+                case "west":
+                    if (West != null) return West;
                     return this;
-                case "starboard":
-                    if (Starboard != null) return Starboard;
+                case "east":
+                    if (East != null) return East;
                     return this;
                 default:
-                    return Ded;
+                    return Dead;
 
             }
         }
+
+
+
     }
 }

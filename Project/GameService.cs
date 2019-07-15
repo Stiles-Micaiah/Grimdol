@@ -11,26 +11,53 @@ namespace CastleGrimtol.Project
         public Room CurrentRoom { get; set; }
         public Player CurrentPlayer { get; set; }
 
-        public void GetUserInput()
+        public void GetUserInput(string input)
         {
-            throw new System.NotImplementedException();
+            string[] inputs = input.Split(' ');
+            string command = inputs[0];
+            string option = "";
+            if (inputs.Length > 1)
+            {
+                option = inputs[1];
+            }
+            switch (command)
+            {
+                case "go":
+                    CurrentRoom = CurrentRoom.RoomChange(option);
+                    break;
+                case "look":
+                this.Look();
+                    break;
+                case "inv" || "inventory":
+                this.Inventory(input);
+                    break;
+                case "look":
+                .Sign(input);
+                    break;
+                case "look":
+                .Sign(input);
+                    break;
+                case "look":
+                .Sign(input);
+                    break;
+            }
         }
 
         public void Go(string direction)
         {
             switch (direction)
             {
-                case "forward":
-                    CurrentRoom = CurrentRoom.RoomChange("forward");
+                case "north":
+                    CurrentRoom = CurrentRoom.RoomChange("north");
                     break;
-                case "aft":
-                    CurrentRoom = CurrentRoom.RoomChange("aft");
+                case "south":
+                    CurrentRoom = CurrentRoom.RoomChange("south");
                     break;
-                case "port":
-                    CurrentRoom = CurrentRoom.RoomChange("port");
+                case "east":
+                    CurrentRoom = CurrentRoom.RoomChange("east");
                     break;
-                case "starboard":
-                    CurrentRoom = CurrentRoom.RoomChange("starboard");
+                case "west":
+                    CurrentRoom = CurrentRoom.RoomChange("west");
                     break;
 
             }
@@ -38,17 +65,29 @@ namespace CastleGrimtol.Project
 
         public void Help()
         {
-            throw new System.NotImplementedException();
+            Console.Clear();
+            Console.Write(@"Options avaibible are as follows: 
+            inventory:,
+            look:,
+            quit:,
+            take: [item]
+            ");
+            Thread.Sleep(3000);
+            Look();
         }
 
         public void Inventory()
         {
-            throw new System.NotImplementedException();
+            if (CurrentPlayer.Inventory.Count > 0)
+            {
+                return CurrentPlayer.Inventory.ForEach(i => i.Name);///////////////////////////////////////////////////////////
+            }
         }
 
         public void Look()
         {
-            throw new System.NotImplementedException();
+            Console.Clear();
+            Console.Write(CurrentRoom.Description);
         }
 
         public void Quit()
@@ -57,29 +96,25 @@ namespace CastleGrimtol.Project
         }
 
         public void Reset()
-        {
-           List<Item> shit = new List<Item>(){
-              new Item("name", "yeet"),
-              new Item("name1", "yeet"),
-              new Item("name2", "yeet")
-            };
-           Dictionary<string, Room> exitshit = new Dictionary<string, Room>(){
-              new Room("upstairs", "you shit yourself"),
-              new Room("upstairs", "you shit yourself", shit, exitshit),
-              new Room("upstairs", "you shit yourself", shit, exitshit)
-            };
-
-
-Room shit = new Room("upstairs", "you shit yourself", shit, exitshit)        }
+        { }
 
         public void Setup()
         {
-            throw new System.NotImplementedException();
+            Item sword = new Item("Sword of Grindlwald", "This sword has a cheesy nametag. I guess its time to use all that jedi tranning you did as a kid?");
+            Item gun = new Item("Colt M1911", "This pistol looks absolutely stunning!!! Your move...");
+
+            Room courtyard = new Room("The Mystery Begins", "There are lots of bushes cut to resemble someone's face. You see a massive door to the north,  and if you look really hard you think you might see a small door to the east. But its a little hard to see with the bushes in your way. You appear to be in a courtyard,   Why are you in a court yard?");
+            Room easternDoor = new Room("The Eastern Door", "You make it to the far east and find there is a door, only, its not small at all. Its 12 feet high. making your way in you find a chest with Pistol in it. There is a door to the north.");
+            Room entryWay = new Room("The Great Hall", "You enter in the the massive door to find a terribly HUGE hallway. You begin to question, am i dead? is this Valhalla. You begin to slowly wander down the hall, turning and looking at everything. There gold everywhere, massive pillars of them. There is an exit to the north.");
+            Room entryWayF = new Room("The Great Hall", "You go through the door and find you are in the room behind the massive door you saw before. And its even bigger than you prieviously thought. You begin to question, am i dead? is this Valhalla. You begin to slowly wander down the hall, turning and looking at everything. There gold everywhere, massive pillars of them. There is an exit to the north.");
+            Room bossRoom = new Room("Throne Room", "You enter what you now realize is the throne room. on the throne you see an old man with a spear. The old man takes notice and stands up. 'Do you dare defy Odin Himself? In his own Throne Room!?' \r ");
+            Room entryWayE = new Room("The Great Hall", "You find the shimmer was a gold sword. take it?");
+            Room dead = new Room("You are dead", "You didn't far well with the Sword");
         }
 
         public void StartGame()
         {
-            
+
             bool firstStart = true;
             string TitleScreen = $@"
   /\\,/\\,                ,
@@ -91,9 +126,7 @@ Room shit = new Room("upstairs", "you shit yourself", shit, exitshit)        }
 _-         (                             (
             -_-                           -_-
                ";
-            string WelcomeInfo = @"Welcome to Mystery. A game in which you know nothing about.
-To get started just press /start/. For information on how to
-play, just press /I'm retarded/ :) ";
+            string WelcomeInfo = @"Welcome to Mystery. A game in which you know nothing about. Please Press enter when ready.";
 
             while (true)
             {
@@ -134,23 +167,42 @@ play, just press /I'm retarded/ :) ";
                 CastleGrimtol.Project.Models.Menu.Select();
                 firstStart = false;
             }
-        
+
         }
 
-        public void TakeItem(string itemName)
+        public string TakeItem(string itemName)
         {
             for (int i = 0; i < CurrentRoom.Items.Count; i++)
             {
                 if (CurrentRoom.Items[i].ToString() == itemName)
                 {
-                    CurrentPlayer.Inventory.Add(CurrentRoom.Items[i]);
+                    Console.WriteLine("CurrentPlayer.addInventory(CurrentRoom.Items[i])");
+                    return "done";
                 }
             }
+            return "done";
+
         }
 
         public void UseItem(string itemName)
         {
-            throw new System.NotImplementedException();
+            if (CurrentRoom.Name == "Throne Room")
+            {
+                if (itemName == "Sword of Grindlwald")
+                {
+                    CurrentRoom = CurrentRoom.RoomChange("dead");
+                }
+                else
+                {
+                    CurrentRoom.RoomChange("north");
+                }
+            }
+            else
+            {
+                Console.WriteLine("You Can't Use That Here!!!");
+            }
+
+            Thread.Sleep(1500);
         }
     }
 }
